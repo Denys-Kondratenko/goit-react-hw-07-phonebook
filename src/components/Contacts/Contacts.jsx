@@ -3,37 +3,49 @@ import { ContactItem, ContactsList, DeleteButton } from './Contacts.styled';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contactsSlice';
 import { useSelector } from 'react-redux';
-import { selectContacts, selectFilter } from 'redux/selectors';
+import { getContacts, selectContacts, selectFilter } from 'redux/selectors';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/operations';
 
 export const Contacts = ({ children }) => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
+  const { isLoading, error } = useSelector(getContacts);
   const filter = useSelector(selectFilter);
-
+  console.log(contacts);
   const visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
     <>
       {children}
-      <ContactsList>
-        {visibleContacts.map(({ id, name, number }) => {
-          return (
-            <ContactItem key={id}>
-              <p>
-                {name}: {number}
-              </p>
-              <DeleteButton
-                type="button"
-                onClick={() => dispatch(deleteContact(id))}
-              >
-                Delete
-              </DeleteButton>
-            </ContactItem>
-          );
-        })}
-      </ContactsList>
+      {isLoading && <b>Loading tasks...</b>}
+      {error && <b>{error}</b>}
+
+      {contacts.length > 0 && (
+        <ContactsList>
+          {visibleContacts.map(({ id, name, number }) => {
+            return (
+              <ContactItem key={id}>
+                <p>
+                  {name}: {number}
+                </p>
+                <DeleteButton
+                  type="button"
+                  onClick={() => dispatch(deleteContact(id))}
+                >
+                  Delete
+                </DeleteButton>
+              </ContactItem>
+            );
+          })}
+        </ContactsList>
+      )}
     </>
   );
 };

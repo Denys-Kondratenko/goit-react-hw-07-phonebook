@@ -1,9 +1,29 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 import initialContacts from '../db/initialContacts.json';
+import { fetchContacts } from './operations';
 
 export const contactSlice = createSlice({
   name: 'contacts',
-  initialState: { initialContacts },
+  initialState: {
+    initialContacts,
+    isLoading: false,
+    error: null,
+  },
+  extraReducers: {
+    [fetchContacts.pending](state) {
+      state.isLoading = true;
+    },
+    [fetchContacts.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.initialContacts = action.payload;
+    },
+    [fetchContacts.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+  },
+
   reducers: {
     addContact: {
       reducer(state, action) {
@@ -19,6 +39,7 @@ export const contactSlice = createSlice({
         };
       },
     },
+
     deleteContact: (state, action) => {
       state.initialContacts = state.initialContacts.filter(
         contact => contact.id !== action.payload
@@ -27,6 +48,12 @@ export const contactSlice = createSlice({
   },
 });
 
-export const { addContact, deleteContact } = contactSlice.actions;
+export const {
+  addContact,
+  deleteContact,
+  fetchingInProgress,
+  fetchingSuccess,
+  fetchingError,
+} = contactSlice.actions;
 
 export const contactsReducer = contactSlice.reducer;

@@ -1,7 +1,7 @@
 import { Formik, Form } from 'formik';
 import { FilterForm, Input } from './Filter.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilterContacts } from 'redux/filterSlice';
+import { filterContacts } from 'redux/filterSlice';
 import { selectFilter } from 'redux/selectors';
 
 export const Filter = () => {
@@ -17,7 +17,7 @@ export const Filter = () => {
             name="filter"
             value={filter}
             onChange={event =>
-              dispatch(getFilterContacts(event.currentTarget.value))
+              dispatch(filterContacts(event.currentTarget.value))
             }
           />
         </FilterForm>

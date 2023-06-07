@@ -47,7 +47,7 @@ export const AddContactForm = () => {
 
   const contactsName = contacts.map(contact => contact.name);
 
-  const onSubmit = (values, contactsName, alertMessage) => {
+  const onSubmit = (values) => {
     contactsName.includes(values.name)
       ? alert(alertMessage(values.name))
       : dispatch(addContact(values.name, values.number));
@@ -58,7 +58,7 @@ export const AddContactForm = () => {
       initialValues={initialValues}
       validationSchema={schema}
       onSubmit={(values, { resetForm }) => {
-        onSubmit(values, contactsName, alertMessage);
+        onSubmit(values);
         resetForm();
       }}
     >
