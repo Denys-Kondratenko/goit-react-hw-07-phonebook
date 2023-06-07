@@ -3,15 +3,14 @@ import styled from 'styled-components';
 export const ContactsList = styled.ul`
   list-style: disc;
   padding-left: 5px;
+  width: 400px;
 `;
 
 export const ContactItem = styled.li`
   display: flex;
   gap: 10px;
   padding-bottom: 14px;
-  ::before {
-    content: '᛫';
-  }
+  justify-content: space-between;
 `;
 
 export const DeleteButton = styled.button`

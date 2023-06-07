@@ -39,7 +39,7 @@ export const Contacts = ({ children }) => {
             return (
               <ContactItem key={id}>
                 <p>
-                  {name}: {number}
+                  ᛫ {name}: {number}
                 </p>
                 <DeleteButton
                   type="button"
