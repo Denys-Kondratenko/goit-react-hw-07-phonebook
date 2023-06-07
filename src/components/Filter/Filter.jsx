@@ -2,11 +2,11 @@ import { Formik, Form } from 'formik';
 import { FilterForm, Input } from './Filter.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterContacts } from 'redux/filterSlice';
-import { selectFilter } from 'redux/selectors';
+import { getFilter } from 'redux/selectors';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(selectFilter);
+  const filter = useSelector(getFilter);
 
   return (
     <Formik initialValues={filter}>

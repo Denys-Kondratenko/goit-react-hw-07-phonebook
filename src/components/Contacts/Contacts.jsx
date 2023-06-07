@@ -1,18 +1,24 @@
 import PropTypes from 'prop-types';
 import { ContactItem, ContactsList, DeleteButton } from './Contacts.styled';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
 import { useSelector } from 'react-redux';
-import { getContacts, selectContacts, selectFilter } from 'redux/selectors';
+import {
+  getContacts,
+  getError,
+  getFilter,
+  getIsLoading,
+} from 'redux/selectors';
 import { useEffect } from 'react';
 import { fetchContacts } from 'redux/operations';
 
 export const Contacts = ({ children }) => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const { isLoading, error } = useSelector(getContacts);
-  const filter = useSelector(selectFilter);
-  console.log(contacts);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
+
   const visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );

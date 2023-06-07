@@ -6,10 +6,9 @@ import {
   Input,
 } from './AddContactForm.styled';
 import * as yup from 'yup';
-// import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
-import { selectContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
+import { getContacts } from 'redux/selectors';
 
 const phoneRegExp =
   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
@@ -43,14 +42,14 @@ const alertMessage = name => {
 
 export const AddContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+  const contacts = useSelector(getContacts);
 
   const contactsName = contacts.map(contact => contact.name);
 
-  const onSubmit = (values) => {
+  const onSubmit = values => {
     contactsName.includes(values.name)
       ? alert(alertMessage(values.name))
-      : dispatch(addContact(values.name, values.number));
+      : dispatch(addContact({ name: values.name, number: values.number }));
   };
 
   return (
