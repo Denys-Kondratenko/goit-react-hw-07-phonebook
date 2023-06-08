@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types';
 import { ContactItem, ContactsList, DeleteButton } from './Contacts.styled';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/operations';
+import { deleteContact } from 'redux/contacts/operations';
 import { useSelector } from 'react-redux';
-import {
-  getContacts,
-  getError,
-  getFilter,
-  getIsLoading,
-} from 'redux/selectors';
+import { getContacts, getError, getIsLoading } from 'redux/contacts/selectors';
+import { getFilter } from 'redux/filter/selectors';
 import { useEffect } from 'react';
-import { fetchContacts } from 'redux/operations';
+import { fetchContacts } from 'redux/contacts/operations';
 
 export const Contacts = ({ children }) => {
   const dispatch = useDispatch();
