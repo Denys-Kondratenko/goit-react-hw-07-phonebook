@@ -7,6 +7,7 @@ import { getContacts, getError, getIsLoading } from 'redux/contacts/selectors';
 import { getFilter } from 'redux/filter/selectors';
 import { useEffect } from 'react';
 import { fetchContacts } from 'redux/contacts/operations';
+import { Loader } from 'components/Loader/Loader';
 
 export const Contacts = ({ children }) => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export const Contacts = ({ children }) => {
   return (
     <>
       {children}
-      {isLoading && <b>Loading tasks...</b>}
+      {isLoading && <Loader />}
       {error && <b>{error}</b>}
 
       {contacts.length > 0 && (
